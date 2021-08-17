@@ -19,6 +19,7 @@ app.use(bodyParser.json())
 
 //api endpoints
 app.use("/",users)
+app.use("/user",users)
 
 
 function validateUser(req, res, next) {

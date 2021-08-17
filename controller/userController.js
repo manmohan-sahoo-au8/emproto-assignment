@@ -30,5 +30,41 @@ module.exports={
           }
         }
       })
+   },
+
+  getAll:function(req,res,next) {
+    let userList = []
+    userModel.find({},(err,users) => {
+      if(err) {
+        next(err)
+      } else {
+        for(let user of users ){
+          userList.push({
+            name:user.name,
+            email:user.email,
+            phone:user.phone,
+          })
+        }
+        res.json({status:"Success",message:"user list found",data:userList})
+      }
+    })
+  },
+
+   updateById:(req,res,next) => {
+    userModel.findByIdAndUpdate(req.params.userId,{
+      name:req.body.name,
+      phone:req.body.phone,      
+    },(err,result) => {
+      if(err) next(err)
+      res.json({status:"success",message:"data updated successfully"})
+    })
+  },
+
+  deleteById:(req,res,next) => {
+    userModel.findByIdAndRemove(req.params.userId,(err,result) => {
+      if(err) next(err)
+      res.json({status:"success",message:"data deleted successfully"})
+    })
   }
+
 }
